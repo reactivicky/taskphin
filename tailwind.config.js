@@ -20,19 +20,30 @@ export default {
       },
       borderRadius: {
         formBorderRadius: "10px",
+        formInputBorderRadius: "5px",
+        buttonRadius: "6px",
       },
       padding: {
         formPadding: "32px",
+        formInputPadding: "8px 12px",
+        buttonPadding: "8px 16px",
       },
       gap: {
         formGap: "24px",
+        labelInputGap: "4px",
+        formInputsGap: "24px",
       },
       fontSize: {
         formHeading: "20px",
         pageNumber: "16px",
+        formInputLabel: "14px",
+        formInput: "14px",
+        buttonFont: "16px",
       },
       fontWeight: {
         pageNumber: "500",
+        formInputLabelWeight: "500",
+        buttonWeight: "500",
       },
     },
   },
