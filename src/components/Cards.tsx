@@ -1,35 +1,63 @@
 import Logo from "../assets/netflix-icon.svg";
 import Button from "../common/Button";
+import cardData from "../data";
 
 const Cards = () => {
   return (
-    <div className="flex gap-cardGap">
-      <div className="h-cardHeight w-cardWidth flex gap-cardLogoTextGap border border-cardBorder rounded-cardRadius p-cardPadding">
-        <img src={Logo} alt="logo" className="h-logoHeight w-logoWidth" />
-        <div className="flex flex-col gap-cardGap">
-          <div>
-            <h2 className="text-cardHeading">UX UI Designer</h2>
-            <div className="text-cardSubheading">
-              <p className="text-dark">Great Vibes - Information Technology</p>
-              <p>Chennai, Tamilnadu, India (In-office)</p>
+    <div className="flex gap-cardGap flex-wrap justify-center">
+      {cardData.map(
+        ({
+          id,
+          job_title,
+          company_name,
+          industry,
+          location,
+          remote_type,
+          experience,
+          salary,
+          total_exployees,
+          apply_type,
+        }) => (
+          <div
+            key={id}
+            className="min-h-cardHeight w-cardWidth flex gap-cardLogoTextGap border border-cardBorder rounded-cardRadius p-cardPadding"
+          >
+            <img src={Logo} alt="logo" className="h-logoHeight w-logoWidth" />
+            <div className="flex flex-col gap-cardGap">
+              <div>
+                <h2 className="text-cardHeading">{job_title}</h2>
+                <div className="text-cardSubheading">
+                  <p className="text-dark">
+                    {company_name} - {industry}
+                  </p>
+                  <p>{location}</p>
+                </div>
+              </div>
+              <div className="flex flex-col gap-cardTextGap text-cardText text-dark">
+                <p>{remote_type}</p>
+                <p>
+                  Experience ({experience.min} - {experience.max})
+                </p>
+                <p>
+                  INR (₹) {salary.min} - {salary.max}
+                </p>
+                <p>{total_exployees} employees</p>
+              </div>
+              <div className="flex gap-cardGap">
+                {apply_type === "quick_apply" ? (
+                  <Button type="primary" onClick={() => null}>
+                    Apply Now
+                  </Button>
+                ) : (
+                  <Button type="secondary" onClick={() => null}>
+                    External Apply
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
-          <div className="flex flex-col gap-cardTextGap text-cardText text-dark">
-            <p>Part-Time (9.00 am - 5.00 pm IST)</p>
-            <p>Experience (1 - 2 years)</p>
-            <p>INR (₹) 30,000 - 50,000 / Month</p>
-            <p>51-200 employees</p>
-          </div>
-          <div className="flex gap-cardGap">
-            <Button type="primary" onClick={() => null}>
-              Apply Now
-            </Button>
-            <Button type="secondary" onClick={() => null}>
-              External Apply
-            </Button>
-          </div>
-        </div>
-      </div>
+        )
+      )}
     </div>
   );
 };
