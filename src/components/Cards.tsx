@@ -1,12 +1,25 @@
 import Logo from "../assets/netflix-icon.svg";
+import Edit from "../assets/edit-icon.svg";
+import Delete from "../assets/delete-icon.svg";
 import Button from "../common/Button";
 import { CardData } from "../data";
+import instance from "../api/axiosInstance";
 
 interface CardsProps {
   jobs: CardData[];
+  fetchJobs: () => Promise<void>;
 }
 
-const Cards = ({ jobs }: CardsProps) => {
+const Cards = ({ jobs, fetchJobs }: CardsProps) => {
+  const handleEdit = () => {};
+  const handleDelete = async (id: string) => {
+    try {
+      await instance.delete(`/${id}`);
+      fetchJobs();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="flex gap-cardGap flex-wrap justify-center">
       {jobs.map(
@@ -29,7 +42,15 @@ const Cards = ({ jobs }: CardsProps) => {
             <img src={Logo} alt="logo" className="h-logoHeight w-logoWidth" />
             <div className="flex flex-col gap-cardGap">
               <div>
-                <h2 className="text-cardHeading">{job_title}</h2>
+                <h2 className="text-cardHeading flex items-center gap-3">
+                  {job_title}{" "}
+                  <button title="edit" onClick={handleEdit}>
+                    <img src={Edit} alt="edit-icon" />
+                  </button>
+                  <button title="delete" onClick={() => handleDelete(id)}>
+                    <img src={Delete} alt="delete-icon" />
+                  </button>
+                </h2>
                 <div className="text-cardSubheading">
                   <p className="text-dark">
                     {company_name} - {industry}
@@ -45,7 +66,9 @@ const Cards = ({ jobs }: CardsProps) => {
                 <p>
                   INR (₹) {salary.min} - {salary.max}
                 </p>
-                <p>{total_exployees} employees</p>
+                <p>
+                  {total_exployees.length == 0 ? 0 : total_exployees} employees
+                </p>
               </div>
               <div className="flex gap-cardGap">
                 {apply_type === "quick_apply" ? (

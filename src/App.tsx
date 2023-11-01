@@ -4,8 +4,8 @@ import Page1 from "./components/Page1";
 import Page2 from "./components/Page2";
 import Button from "./common/Button";
 import Cards from "./components/Cards";
-import axios from "axios";
 import { CardData } from "./data";
+import instance from "./api/axiosInstance";
 
 Modal.setAppElement("#root");
 
@@ -16,9 +16,7 @@ function App() {
 
   const fetchJobs = async () => {
     try {
-      const res = await axios.get(
-        `https://${import.meta.env.VITE_MOCK_API_SECRET}.mockapi.io/v1/api/jobs`
-      );
+      const res = await instance.get("/");
       setJobs(res.data);
     } catch (error) {
       console.log(error);
@@ -27,7 +25,7 @@ function App() {
 
   useEffect(() => {
     fetchJobs();
-  }, []);
+  }, [modalIsOpen]);
 
   const openModal = () => {
     setIsOpen(true);
@@ -60,7 +58,7 @@ function App() {
           <Page2 closeModal={closeModal} />
         )}
       </Modal>
-      <Cards jobs={jobs} />
+      <Cards jobs={jobs} fetchJobs={fetchJobs} />
     </div>
   );
 }

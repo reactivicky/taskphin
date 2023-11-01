@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import FormInput from "../common/FormInput";
 import Button from "../common/Button";
 import RadioGroup from "../common/RadioGroup";
 import FormContext, { FormValues } from "../Context";
+import instance from "../api/axiosInstance";
 
 interface Page2Props {
   closeModal: () => void;
@@ -37,12 +37,7 @@ const Page2 = ({ closeModal }: Page2Props) => {
   const onSubmit = async (data: FormValues) => {
     const formData = { ...formState, ...data };
     try {
-      await axios.post(
-        `https://${
-          import.meta.env.VITE_MOCK_API_SECRET
-        }.mockapi.io/v1/api/jobs`,
-        formData
-      );
+      await instance.post("/", formData);
       setFormState(formData);
     } catch (error) {
       console.log(error);
