@@ -17,7 +17,7 @@ function App() {
   const fetchJobs = async () => {
     try {
       const res = await axios.get(
-        "https://65421476f0b8287df1ff7915.mockapi.io/v1/api/jobs"
+        `https://${import.meta.env.VITE_MOCK_API_SECRET}.mockapi.io/v1/api/jobs`
       );
       setJobs(res.data);
     } catch (error) {

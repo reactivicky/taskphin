@@ -38,7 +38,9 @@ const Page2 = ({ closeModal }: Page2Props) => {
     const formData = { ...formState, ...data };
     try {
       await axios.post(
-        "https://65421476f0b8287df1ff7915.mockapi.io/v1/api/jobs",
+        `https://${
+          import.meta.env.VITE_MOCK_API_SECRET
+        }.mockapi.io/v1/api/jobs`,
         formData
       );
       setFormState(formData);
