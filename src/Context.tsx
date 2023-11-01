@@ -14,7 +14,7 @@ export interface FormValues {
     min: string;
     max: string;
   };
-  total_exployees: string;
+  total_employees: string;
   apply_type: "quick_apply" | "external_apply";
 }
 

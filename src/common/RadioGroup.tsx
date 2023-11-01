@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import RadioBtn from "./RadioBtn";
+import { type RadioOption } from "../components/Page2";
 
 interface IProps {
-  options: React.ReactElement[];
-  onChange?: (selectedIndex: number) => void;
-  value?: number;
+  options: RadioOption[];
+  onChange?: (value: string) => void;
+  value?: string;
   labelText?: string;
 }
 const RadioGroup = ({ options, onChange, value, labelText }: IProps) => {
-  const [selectedIndex, setSelectedIndex] = useState<number | undefined>(value);
-  function onSelect(index: number) {
-    setSelectedIndex(index);
-    onChange && onChange(index);
-  }
+  const [selectedOption, setSelectedOption] = useState<string | undefined>(
+    value
+  );
+  const onSelect = (value: string) => {
+    setSelectedOption(value);
+    onChange && onChange(value);
+  };
   return (
     <div className="flex flex-col gap-radioInputGap">
       {labelText && (
@@ -21,14 +24,14 @@ const RadioGroup = ({ options, onChange, value, labelText }: IProps) => {
         </label>
       )}
       <div className="flex gap-radioGap">
-        {options.map((el, index) => (
+        {options.map(({ id, label, value }) => (
           <RadioBtn
-            key={index}
-            index={index}
-            selectedIndex={selectedIndex}
-            onSelect={(index) => onSelect(index)}
+            key={id}
+            value={value}
+            selectedOption={selectedOption}
+            onSelect={() => onSelect(value)}
           >
-            {el}
+            {label}
           </RadioBtn>
         ))}
       </div>

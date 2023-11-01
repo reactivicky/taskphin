@@ -6,6 +6,7 @@ interface ButtonProps {
   children: ReactNode;
   onClick?: () => any;
   submitBtn?: boolean;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -14,6 +15,7 @@ const Button = ({
   type,
   onClick,
   submitBtn = false,
+  disabled = false,
 }: ButtonProps) => {
   const isPrimary = type === "primary";
   const primaryClasses =
@@ -25,6 +27,7 @@ const Button = ({
       className={`${isPrimary ? primaryClasses : secondaryClasses} ${classes}`}
       onClick={onClick}
       type={submitBtn ? "submit" : "button"}
+      disabled={disabled}
     >
       {children}
     </button>

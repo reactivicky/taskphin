@@ -1,18 +1,29 @@
-import { type Dispatch, type SetStateAction, useContext } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useForm } from "react-hook-form";
 import FormInput from "../common/FormInput";
 import Button from "../common/Button";
 import FormContext, { FormValues } from "../Context";
+import instance from "../api/axiosInstance";
+import { type CardData } from "../data";
 
 interface Page1Props {
   setPage: Dispatch<SetStateAction<number>>;
+  selectedJob: string | null;
 }
 
-const Page1 = ({ setPage }: Page1Props) => {
+const Page1 = ({ setPage, selectedJob }: Page1Props) => {
   const { setFormState } = useContext(FormContext);
+  const [loading, setLoading] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
@@ -23,6 +34,26 @@ const Page1 = ({ setPage }: Page1Props) => {
       remote_type: "",
     },
   });
+
+  useEffect(() => {
+    const fetchJobData = async (id: string) => {
+      try {
+        setLoading(true);
+        const res = await instance.get<CardData>(`/${id}`);
+        const jobData = res.data;
+        reset(jobData);
+        setFormState(jobData);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    };
+
+    if (selectedJob) {
+      fetchJobData(selectedJob);
+    }
+  }, [reset, selectedJob, setFormState]);
 
   const onSubmit = (data: FormValues) => {
     setFormState(data);
@@ -75,7 +106,12 @@ const Page1 = ({ setPage }: Page1Props) => {
           register={register}
         />
       </div>
-      <Button type="primary" classes="self-end mt-auto" submitBtn>
+      <Button
+        disabled={loading}
+        type="primary"
+        classes="self-end mt-auto"
+        submitBtn
+      >
         Next
       </Button>
     </form>

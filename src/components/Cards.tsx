@@ -8,10 +8,15 @@ import instance from "../api/axiosInstance";
 interface CardsProps {
   jobs: CardData[];
   fetchJobs: () => Promise<void>;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedJob: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const Cards = ({ jobs, fetchJobs }: CardsProps) => {
-  const handleEdit = () => {};
+const Cards = ({ jobs, fetchJobs, setIsOpen, setSelectedJob }: CardsProps) => {
+  const handleEdit = async (id: string) => {
+    setSelectedJob(id);
+    setIsOpen(true);
+  };
   const handleDelete = async (id: string) => {
     try {
       await instance.delete(`/${id}`);
@@ -32,7 +37,7 @@ const Cards = ({ jobs, fetchJobs }: CardsProps) => {
           remote_type,
           experience,
           salary,
-          total_exployees,
+          total_employees,
           apply_type,
         }) => (
           <div
@@ -44,7 +49,7 @@ const Cards = ({ jobs, fetchJobs }: CardsProps) => {
               <div>
                 <h2 className="text-cardHeading flex items-center gap-3">
                   {job_title}{" "}
-                  <button title="edit" onClick={handleEdit}>
+                  <button title="edit" onClick={() => handleEdit(id)}>
                     <img src={Edit} alt="edit-icon" />
                   </button>
                   <button title="delete" onClick={() => handleDelete(id)}>
@@ -67,7 +72,7 @@ const Cards = ({ jobs, fetchJobs }: CardsProps) => {
                   INR (₹) {salary.min} - {salary.max}
                 </p>
                 <p>
-                  {total_exployees.length == 0 ? 0 : total_exployees} employees
+                  {total_employees.length == 0 ? 0 : total_employees} employees
                 </p>
               </div>
               <div className="flex gap-cardGap">

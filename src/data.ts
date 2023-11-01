@@ -20,7 +20,7 @@ const cardData: CardData[] = [
       min: '10000',
       max: '100000',
     },
-    total_exployees: '100',
+    total_employees: '100',
     apply_type: "quick_apply",
   },
   {
@@ -38,7 +38,7 @@ const cardData: CardData[] = [
       min: '10000',
       max: '100000',
     },
-    total_exployees: '100',
+    total_employees: '100',
     apply_type: "external_apply",
   },
   {
@@ -56,7 +56,7 @@ const cardData: CardData[] = [
       min: '10000',
       max: '100000',
     },
-    total_exployees: '100',
+    total_employees: '100',
     apply_type: "quick_apply" ,
   },
   {
@@ -74,7 +74,7 @@ const cardData: CardData[] = [
       min: '10000',
       max: '100000',
     },
-    total_exployees: '100',
+    total_employees: '100',
     apply_type: "quick_apply" ,
   },
 ]

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import FormInput from "../common/FormInput";
 import Button from "../common/Button";
@@ -8,13 +8,35 @@ import instance from "../api/axiosInstance";
 
 interface Page2Props {
   closeModal: () => void;
+  selectedJob: string | null;
 }
 
-const Page2 = ({ closeModal }: Page2Props) => {
-  const [currentRadioValue, setCurrentRadioValue] = useState<number>(0);
-  const { formState, setFormState } = useContext(FormContext);
+export interface RadioOption {
+  id: number;
+  label: string;
+  value: string;
+}
 
-  const { register, handleSubmit, setValue } = useForm<FormValues>({
+const options: RadioOption[] = [
+  {
+    id: 1,
+    label: "Quick apply",
+    value: "quick_apply",
+  },
+  {
+    id: 2,
+    label: "External apply",
+    value: "external_apply",
+  },
+];
+
+const Page2 = ({ closeModal, selectedJob }: Page2Props) => {
+  const { formState, setFormState } = useContext(FormContext);
+  const [currentRadioValue, setCurrentRadioValue] = useState<string>(
+    formState.apply_type ?? "quick_apply"
+  );
+
+  const { register, handleSubmit, setValue, reset } = useForm<FormValues>({
     defaultValues: {
       experience: {
         min: "",
@@ -24,21 +46,34 @@ const Page2 = ({ closeModal }: Page2Props) => {
         max: "",
         min: "",
       },
-      total_exployees: "",
+      total_employees: "",
       apply_type: "quick_apply",
     },
   });
 
-  const handleRadioChange = (idx: number) => {
-    setCurrentRadioValue(idx);
-    setValue("apply_type", idx === 0 ? "quick_apply" : "external_apply");
+  useEffect(() => {
+    const formData = { ...formState };
+    if (!formData.apply_type) {
+      formData.apply_type = "quick_apply";
+    }
+    reset(formData);
+  }, [formState, reset]);
+
+  const handleRadioChange = (val: string) => {
+    setCurrentRadioValue(val);
+    setValue("apply_type", val as "quick_apply" | "external_apply");
   };
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: any) => {
     const formData = { ...formState, ...data };
     try {
-      await instance.post("/", formData);
-      setFormState(formData);
+      if (selectedJob) {
+        await instance.put(`/${selectedJob}`, formData);
+        setFormState(formData);
+      } else {
+        await instance.post("/", formData);
+        setFormState(formData);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -82,7 +117,7 @@ const Page2 = ({ closeModal }: Page2Props) => {
         onChange={handleRadioChange}
         value={currentRadioValue}
         labelText="Apply type"
-        options={[<span>Quick apply</span>, <span>External apply</span>]}
+        options={options}
       />
       <Button type="primary" classes="self-end mt-auto" submitBtn>
         Save

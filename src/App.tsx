@@ -12,6 +12,7 @@ Modal.setAppElement("#root");
 function App() {
   const [page, setPage] = useState(1);
   const [jobs, setJobs] = useState<CardData[]>([]);
+  const [selectedJob, setSelectedJob] = useState<string | null>(null);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
   const fetchJobs = async () => {
@@ -33,6 +34,7 @@ function App() {
 
   const closeModal = () => {
     setIsOpen(false);
+    setSelectedJob(null);
     setPage(1);
   };
 
@@ -53,12 +55,17 @@ function App() {
           <p className="text-pageNumber font-pageNumber">Step {page}</p>
         </div>
         {page === 1 ? (
-          <Page1 setPage={setPage} />
+          <Page1 setPage={setPage} selectedJob={selectedJob} />
         ) : (
-          <Page2 closeModal={closeModal} />
+          <Page2 closeModal={closeModal} selectedJob={selectedJob} />
         )}
       </Modal>
-      <Cards jobs={jobs} fetchJobs={fetchJobs} />
+      <Cards
+        jobs={jobs}
+        fetchJobs={fetchJobs}
+        setIsOpen={setIsOpen}
+        setSelectedJob={setSelectedJob}
+      />
     </div>
   );
 }
