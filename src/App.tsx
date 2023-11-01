@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import Page1 from "./components/Page1";
 import Page2 from "./components/Page2";
 import Button from "./common/Button";
+import Cards from "./components/Cards";
 
 Modal.setAppElement("#root");
 
@@ -21,7 +22,7 @@ function App() {
 
   return (
     <div className="p-5">
-      <Button type="primary" onClick={openModal}>
+      <Button type="primary" onClick={openModal} classes="mb-5">
         Create Job
       </Button>
       <Modal
@@ -41,6 +42,7 @@ function App() {
           <Page2 closeModal={closeModal} />
         )}
       </Modal>
+      <Cards />
     </div>
   );
 }
