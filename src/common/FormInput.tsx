@@ -1,5 +1,5 @@
 import { type UseFormRegister } from "react-hook-form";
-import { FormValues } from "../components/Page1";
+import { type FormValues } from "../Context";
 
 interface FormInputProps {
   id: string;
