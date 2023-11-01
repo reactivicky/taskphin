@@ -20,7 +20,7 @@ const RadioBtn = ({
     >
       <div
         className={`rounded-full w-radioWidth h-radioHeight border border-radioBorder transition ${
-          isSelected && "border-4 border-primary bg-sky-300"
+          isSelected && "border border-primary bg-sky-300"
         } `}
       ></div>
       {children}

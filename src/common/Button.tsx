@@ -4,10 +4,17 @@ interface ButtonProps {
   classes?: string;
   type: "primary" | "secondary";
   children: ReactNode;
-  onClick: () => any;
+  onClick?: () => any;
+  submitBtn?: boolean;
 }
 
-const Button = ({ classes, children, type, onClick }: ButtonProps) => {
+const Button = ({
+  classes,
+  children,
+  type,
+  onClick,
+  submitBtn = false,
+}: ButtonProps) => {
   const isPrimary = type === "primary";
   const primaryClasses =
     "bg-primary p-buttonPadding rounded-buttonRadius text-white text-buttonFont font-buttonWeight";
@@ -17,6 +24,7 @@ const Button = ({ classes, children, type, onClick }: ButtonProps) => {
     <button
       className={`${isPrimary ? primaryClasses : secondaryClasses} ${classes}`}
       onClick={onClick}
+      type={submitBtn ? "submit" : "button"}
     >
       {children}
     </button>

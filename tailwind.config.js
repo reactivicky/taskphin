@@ -13,6 +13,7 @@ export default {
         primary: "#1597e4",
         radioBorder: "#D8D8D8",
         cardSubheading: "#4D4D4D",
+        overlayColor: "rgba(0, 0, 0, 0.5)",
       },
       height: {
         formHeight: "564px",
@@ -58,6 +59,7 @@ export default {
         cardHeading: "24px",
         cardSubheading: "16px",
         cardText: "16px",
+        formError: "12px",
       },
       fontWeight: {
         pageNumber: "500",

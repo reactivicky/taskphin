@@ -1,17 +1,25 @@
+import { FieldValues, type UseFormRegister } from "react-hook-form";
+
 interface FormInputProps {
   id: string;
+  register: UseFormRegister<FieldValues>;
   labelName?: string;
   placeholder: string;
   required?: boolean;
   classes?: string;
+  hasError?: boolean;
+  errorText?: string;
 }
 
 const FormInput = ({
   id,
   labelName,
   placeholder,
-  required,
+  required = false,
+  hasError = false,
+  errorText = "",
   classes,
+  register,
 }: FormInputProps) => {
   return (
     <div className="flex flex-col gap-labelInputGap justify-end">
@@ -29,7 +37,14 @@ const FormInput = ({
         id={id}
         placeholder={placeholder}
         className={`text-formInput placeholder:text-placeholder border rounded-formInputBorderRadius border-solid border-cardBorder p-formInputPadding ${classes}`}
+        {...register(id, {
+          required: {
+            value: required,
+            message: `${labelName} is required`,
+          },
+        })}
       />
+      {hasError && <p className="text-error text-formError">{errorText}</p>}
     </div>
   );
 };
