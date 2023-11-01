@@ -11,12 +11,15 @@ export default {
         error: "#d86161",
         placeholder: "#7a7a7a",
         primary: "#1597e4",
+        radioBorder: "#D8D8D8",
       },
       height: {
         formHeight: "564px",
+        radioHeight: "20px",
       },
       width: {
         formWidth: "577px",
+        radioWidth: "20px",
       },
       borderRadius: {
         formBorderRadius: "10px",
@@ -32,6 +35,8 @@ export default {
         formGap: "24px",
         labelInputGap: "4px",
         formInputsGap: "24px",
+        radioGap: "16px",
+        radioInputGap: "4px",
       },
       fontSize: {
         formHeading: "20px",
@@ -39,6 +44,7 @@ export default {
         formInputLabel: "14px",
         formInput: "14px",
         buttonFont: "16px",
+        radioFont: "14px",
       },
       fontWeight: {
         pageNumber: "500",
