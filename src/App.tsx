@@ -1,15 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Page1 from "./components/Page1";
 import Page2 from "./components/Page2";
 import Button from "./common/Button";
 import Cards from "./components/Cards";
+import axios from "axios";
+import { CardData } from "./data";
 
 Modal.setAppElement("#root");
 
 function App() {
   const [page, setPage] = useState(1);
+  const [jobs, setJobs] = useState<CardData[]>([]);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+
+  const fetchJobs = async () => {
+    try {
+      const res = await axios.get(
+        "https://65421476f0b8287df1ff7915.mockapi.io/v1/api/jobs"
+      );
+      setJobs(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
 
   const openModal = () => {
     setIsOpen(true);
@@ -42,7 +60,7 @@ function App() {
           <Page2 closeModal={closeModal} />
         )}
       </Modal>
-      <Cards />
+      <Cards jobs={jobs} />
     </div>
   );
 }

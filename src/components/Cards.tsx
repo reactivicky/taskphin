@@ -1,11 +1,15 @@
 import Logo from "../assets/netflix-icon.svg";
 import Button from "../common/Button";
-import cardData from "../data";
+import { CardData } from "../data";
 
-const Cards = () => {
+interface CardsProps {
+  jobs: CardData[];
+}
+
+const Cards = ({ jobs }: CardsProps) => {
   return (
     <div className="flex gap-cardGap flex-wrap justify-center">
-      {cardData.map(
+      {jobs.map(
         ({
           id,
           job_title,

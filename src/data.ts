@@ -1,12 +1,12 @@
 import { FormValues } from "./Context"
 
-interface CardData extends FormValues {
-  id: number;
+export interface CardData extends FormValues {
+  id: string;
 }
 
 const cardData: CardData[] = [
   {
-    id: 1,
+    id: '1',
     job_title: 'UX UI Designer',
     company_name: 'Test Company',
     industry: 'IT',
@@ -24,7 +24,7 @@ const cardData: CardData[] = [
     apply_type: "quick_apply",
   },
   {
-    id: 2,
+    id: '2',
     job_title: 'UI Developer',
     company_name: 'Test Company',
     industry: 'IT',
@@ -42,7 +42,7 @@ const cardData: CardData[] = [
     apply_type: "external_apply",
   },
   {
-    id: 3,
+    id: '3',
     job_title: 'React Developer',
     company_name: 'Test Company',
     industry: 'IT',
@@ -60,7 +60,7 @@ const cardData: CardData[] = [
     apply_type: "quick_apply" ,
   },
   {
-    id: 4,
+    id: '4',
     job_title: 'Node developer',
     company_name: 'Test Company',
     industry: 'IT',
