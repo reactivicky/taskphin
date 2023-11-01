@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import FormInput from "../common/FormInput";
 import Button from "../common/Button";
@@ -11,7 +12,7 @@ interface Page2Props {
 
 const Page2 = ({ closeModal }: Page2Props) => {
   const [currentRadioValue, setCurrentRadioValue] = useState<number>(0);
-  const { setFormState } = useContext(FormContext);
+  const { formState, setFormState } = useContext(FormContext);
 
   const { register, handleSubmit, setValue } = useForm<FormValues>({
     defaultValues: {
@@ -33,10 +34,17 @@ const Page2 = ({ closeModal }: Page2Props) => {
     setValue("apply_type", idx === 0 ? "quick_apply" : "external_apply");
   };
 
-  const onSubmit = (data: FormValues) => {
-    setFormState((prev) => {
-      return { ...prev, ...data };
-    });
+  const onSubmit = async (data: FormValues) => {
+    const formData = { ...formState, ...data };
+    try {
+      await axios.post(
+        "https://65421476f0b8287df1ff7915.mockapi.io/v1/api/jobs",
+        formData
+      );
+      setFormState(formData);
+    } catch (error) {
+      console.log(error);
+    }
     closeModal();
   };
 
