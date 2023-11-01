@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction } from "react";
-import FormInput from "./FormInput";
-import Button from "./Button";
+import FormInput from "../common/FormInput";
+import Button from "../common/Button";
 
 interface Page1Props {
   setPage: Dispatch<SetStateAction<number>>;

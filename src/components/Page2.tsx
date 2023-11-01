@@ -1,17 +1,17 @@
-import { useState, type Dispatch, type SetStateAction } from "react";
-import FormInput from "./FormInput";
-import Button from "./Button";
-import RadioGroup from "./RadioGroup";
+import { useState } from "react";
+import FormInput from "../common/FormInput";
+import Button from "../common/Button";
+import RadioGroup from "../common/RadioGroup";
 
-interface Page1Props {
-  setPage: Dispatch<SetStateAction<number>>;
+interface Page2Props {
+  closeModal: () => void;
 }
 
-const Page2 = ({ setPage }: Page1Props) => {
+const Page2 = ({ closeModal }: Page2Props) => {
   const [currentRadioValue, setCurrentRadioValue] = useState<number>(0);
 
   const handleNextClick = () => {
-    setPage(2);
+    closeModal();
   };
 
   return (
@@ -44,7 +44,7 @@ const Page2 = ({ setPage }: Page1Props) => {
         type="primary"
         classes="self-end mt-auto"
       >
-        Next
+        Save
       </Button>
     </>
   );
