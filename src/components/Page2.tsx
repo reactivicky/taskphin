@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import FormInput from "../common/FormInput";
 import Button from "../common/Button";
 import RadioGroup from "../common/RadioGroup";
+import FormContext, { FormValues } from "../Context";
 
 interface Page2Props {
   closeModal: () => void;
@@ -10,61 +11,78 @@ interface Page2Props {
 
 const Page2 = ({ closeModal }: Page2Props) => {
   const [currentRadioValue, setCurrentRadioValue] = useState<number>(0);
+  const { setFormState } = useContext(FormContext);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, setValue } = useForm<FormValues>({
+    defaultValues: {
+      experience: {
+        min: "",
+        max: "",
+      },
+      salary: {
+        max: "",
+        min: "",
+      },
+      total_exployees: "",
+      apply_type: "quick_apply",
+    },
+  });
 
-  const handleNextClick = () => {
+  const handleRadioChange = (idx: number) => {
+    setCurrentRadioValue(idx);
+    setValue("apply_type", idx === 0 ? "quick_apply" : "external_apply");
+  };
+
+  const onSubmit = (data: FormValues) => {
+    setFormState((prev) => {
+      return { ...prev, ...data };
+    });
     closeModal();
   };
 
   return (
-    <>
+    <form
+      className="flex flex-col gap-formGap grow"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="grid grid-cols-2 gap-formInputsGap">
         <FormInput
-          id="experience-min"
+          id="experience.min"
           labelName="Experience"
           placeholder="Minimum"
           register={register}
         />
         <FormInput
-          id="experience-max"
+          id="experience.max"
           placeholder="Maximum"
           register={register}
         />
       </div>
       <div className="grid grid-cols-2 gap-formInputsGap">
         <FormInput
-          id="salary-min"
+          id="salary.min"
           labelName="Salary"
           placeholder="Minimum"
           register={register}
         />
-        <FormInput id="salary-max" placeholder="Maximum" register={register} />
+        <FormInput id="salary.max" placeholder="Maximum" register={register} />
       </div>
       <FormInput
-        id="total-employee"
+        id="total_employees"
         labelName="Total employee"
         placeholder="ex. 100"
         register={register}
       />
       <RadioGroup
-        onChange={(idx) => setCurrentRadioValue(idx)}
+        onChange={handleRadioChange}
         value={currentRadioValue}
         labelText="Apply type"
         options={[<span>Quick apply</span>, <span>External apply</span>]}
       />
-      <Button
-        onClick={handleNextClick}
-        type="primary"
-        classes="self-end mt-auto"
-      >
+      <Button type="primary" classes="self-end mt-auto" submitBtn>
         Save
       </Button>
-    </>
+    </form>
   );
 };
 

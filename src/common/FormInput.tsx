@@ -1,8 +1,9 @@
-import { FieldValues, type UseFormRegister } from "react-hook-form";
+import { type UseFormRegister } from "react-hook-form";
+import { FormValues } from "../components/Page1";
 
 interface FormInputProps {
   id: string;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<FormValues>;
   labelName?: string;
   placeholder: string;
   required?: boolean;
@@ -37,7 +38,7 @@ const FormInput = ({
         id={id}
         placeholder={placeholder}
         className={`text-formInput placeholder:text-placeholder border rounded-formInputBorderRadius border-solid border-cardBorder p-formInputPadding ${classes}`}
-        {...register(id, {
+        {...register(id as any, {
           required: {
             value: required,
             message: `${labelName} is required`,

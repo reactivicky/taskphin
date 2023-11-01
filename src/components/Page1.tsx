@@ -1,21 +1,32 @@
-import { type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction, useContext } from "react";
 import { useForm } from "react-hook-form";
 import FormInput from "../common/FormInput";
 import Button from "../common/Button";
+import FormContext, { FormValues } from "../Context";
 
 interface Page1Props {
   setPage: Dispatch<SetStateAction<number>>;
 }
 
 const Page1 = ({ setPage }: Page1Props) => {
+  const { setFormState } = useContext(FormContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormValues>({
+    defaultValues: {
+      job_title: "",
+      company_name: "",
+      industry: "",
+      location: "",
+      remote_type: "",
+    },
+  });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (data: FormValues) => {
+    setFormState(data);
+    setPage(2);
   };
 
   return (
@@ -24,21 +35,21 @@ const Page1 = ({ setPage }: Page1Props) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <FormInput
-        id="job-title"
+        id="job_title"
         labelName="Job title"
         placeholder="ex. UX UI Designer"
         register={register}
-        hasError={Object.hasOwn(errors, "job-title")}
-        errorText={errors["job-title"]?.message as string}
+        hasError={Object.hasOwn(errors, "job_title")}
+        errorText={errors["job_title"]?.message as string}
         required
       />
       <FormInput
-        id="company-name"
+        id="company_name"
         labelName="Company name"
         placeholder="ex. Google"
         register={register}
-        hasError={Object.hasOwn(errors, "company-name")}
-        errorText={errors["company-name"]?.message as string}
+        hasError={Object.hasOwn(errors, "company_name")}
+        errorText={errors["company_name"]?.message as string}
         required
       />
       <FormInput
@@ -58,7 +69,7 @@ const Page1 = ({ setPage }: Page1Props) => {
           register={register}
         />
         <FormInput
-          id="remote-type"
+          id="remote_type"
           labelName="Remote type"
           placeholder="ex. In-office"
           register={register}
